@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.1); opacity: 0; }
+        }
+        .pulse-ring::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            border: 3px solid #ef4444;
+            border-radius: 50%;
+            animation: pulse-ring 2s infinite;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .spin-slow { animation: rotate 20s linear infinite; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-screen">
+    <nav class="fixed w-full z-50 bg-black bg-opacity-20 backdrop-blur-md border-b border-white border-opacity-10">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="text-2xl font-bold text-white">LifeFlow</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-white hover:text-red-400 transition-colors">Home</a>
+                    <a href="#features" class="text-white hover:text-red-400 transition-colors">Features</a>
+                    <a href="#stats" class="text-white hover:text-red-400 transition-colors">Stats</a>
+                    <a href="#tips" class="text-white hover:text-red-400 transition-colors">Tips</a>
+                </div>
+                <button id="menuBtn" class="md:hidden text-white">
+                    <div class="w-6 h-0.5 bg-white mb-1 transition-all duration-300"></div>
+                    <div class="w-6 h-0.5 bg-white mb-1 transition-all duration-300"></div>
+                    <div class="w-6 h-0.5 bg-white transition-all duration-300"></div>
+                </button>
+            </div>
+            <div id="mobileMenu" class="md:hidden overflow-hidden max-h-0 transition-all duration-300">
+                <div class="py-2 space-y-2">
+                    <a href="#home" class="block text-white hover:text-red-400 py-2">Home</a>
+                    <a href="#features" class="block text-white hover:text-red-400 py-2">Features</a>
+                    <a href="#stats" class="block text-white hover:text-red-400 py-2">Stats</a>
+                    <a href="#tips" class="block text-white hover:text-red-400 py-2">Tips</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-20">
+        <section id="home" class="min-h-screen flex items-center">
+            <div class="container mx-auto px-4">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="text-center lg:text-left">
+                        <h1 class="text-5xl lg:text-7xl font-bold text-white mb-6">
+                            Focus.<br>
+                            <span class="text-red-500">Work.</span><br>
+                            Repeat.
+                        </h1>
+                        <p class="text-xl text-gray-300 mb-8 max-w-lg">
+                            Maximize your productivity with the proven Pomodoro Technique. 25 minutes of focused work, 5 minutes of rest.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                            <button class="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-full font-semibold transition-colors">
+                                Start Focus Session
+                            </button>
+                            <button class="border border-white text-white hover:bg-white hover:text-black px-8 py-3 rounded-full font-semibold transition-colors">
+                                Learn More
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex justify-center">
+                        <div class="relative">
+                            <div id="timerCircle" class="w-80 h-80 rounded-full border-8 border-gray-700 relative pulse-ring">
+                                <div class="absolute inset-4 bg-gradient-to-br from-red-600 to-purple-600 rounded-full flex items-center justify-center">
+                                    <div class="text-center">
+                                        <div id="timeDisplay" class="text-5xl font-bold text-white mb-2">25:00</div>
+                                        <div id="sessionType" class="text-lg text-gray-300">Focus Time</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="absolute -top-4 -right-4 w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center spin-slow">
+                                <div class="w-3 h-3 bg-white rounded-full"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="py-20 bg-black bg-opacity-20">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-white text-center mb-16">Why Choose LifeFlow?</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-6 border border-white border-opacity-20">
+                        <div class="w-12 h-12 bg-red-600 rounded-xl flex items-center justify-center mb-4">
+                            <div class="w-6 h-6 bg-white rounded-full"></div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">25/5 Method</h3>
+                        <p class="text-gray-300">Classic Pomodoro intervals - 25 minutes focused work followed by 5 minutes of well-deserved break.</p>
+                    </div>
+                    <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-6 border border-white border-opacity-20">
+                        <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mb-4">
+                            <div class="w-6 h-6 border-2 border-white rounded"></div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Custom Sessions</h3>
+                        <p class="text-gray-300">Adjust work and break durations to match your workflow and concentration levels.</p>
+                    </div>
+                    <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-6 border border-white border-opacity-20">
+                        <div class="w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center mb-4">
+                            <div class="w-6 h-6 bg-white rounded-sm"></div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Progress Tracking</h3>
+                        <p class="text-gray-300">Monitor your daily and weekly productivity with detailed statistics and insights.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <aside class="py-16 bg-gradient-to-r from-red-600 to-purple-600">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h2 class="text-3xl font-bold text-white mb-6">Join your school students and get ahead of them in terms of focus</h2>
+                </div>
+            </div>
+        </aside>
+
+        <section id="stats" class="py-20">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-white text-center mb-16">Your Progress Dashboard</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                    <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-6 text-center border border-white border-opacity-20">
+                        <div class="text-3xl font-bold text-red-500 mb-2">127</div>
+                        <div class="text-gray-300">Sessions Today</div>
+                    </div>
+                    <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-6 text-center border border-white border-opacity-20">
+                        <div class="text-3xl font-bold text-blue-500 mb-2">52.5h</div>
+                        <div class="text-gray-300">This Week</div>
+                    </div>
+                    <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-6 text-center border border-white border-opacity-20">
+                        <div class="text-3xl font-bold text-green-500 mb-2">89%</div>
+                        <div class="text-gray-300">Success Rate</div>
+                    </div>
+                    <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-6 text-center border border-white border-opacity-20">
+                        <div class="text-3xl font-bold text-purple-500 mb-2">14</div>
+                        <div class="text-gray-300">Day Streak</div>
+                    </div>
+                </div>
+                <div class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl p-6 border border-white border-opacity-20">
+                    <h3 class="text-xl font-bold text-white mb-4">Weekly Overview</h3>
+                    <div class="grid grid-cols-7 gap-2">
+                        <div class="text-center">
+                            <div class="text-sm text-gray-400 mb-2">Mon</div>
+                            <div class="h-20 bg-red-600 rounded w-full flex items-end justify-center pb-2">
+                                <span class="text-xs text-white">8h</span>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-sm text-gray-400 mb-2">Tue</div>
+                            <div class="h-20 bg-red-600 rounded w-full flex items-end justify-center pb-2" style="height: 4rem;">
+                                <span class="text-xs text-white">6h</span>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-sm text-gray-400 mb-2">Wed</div>
+                            <div class="h-20 bg-red-600 rounded w-full flex items-end justify-center pb-2" style="height: 6rem;">
+                                <span class="text-xs text-white">9h</span>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-sm text-gray-400 mb-2">Thu</div>
+                            <div class="h-20 bg-red-600 rounded w-full flex items-end justify-center pb-2" style="height: 3rem;">
+                                <span class="text-xs text-white">5h</span>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-sm text-gray-400 mb-2">Fri</div>
+                            <div class="h-20 bg-red-600 rounded w-full flex items-end justify-center pb-2" style="height: 5rem;">
+                                <span class="text-xs text-white">7h</span>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-sm text-gray-400 mb-2">Sat</div>
+                            <div class="h-20 bg-gray-600 rounded w-full flex items-end justify-center pb-2" style="height: 2rem;">
+                                <span class="text-xs text-white">3h</span>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-sm text-gray-400 mb-2">Sun</div>
+                            <div class="h-20 bg-gray-600 rounded w-full flex items-end justify-center pb-2" style="height: 1.5rem;">
+                                <span class="text-xs text-white">2h</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tips" class="py-20 bg-black bg-opacity-20">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold text-white text-center mb-16">Productivity Tips</h2>
+                <div class="max-w-4xl mx-auto space-y-6">
+                    <details class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl border border-white border-opacity-20">
+                        <summary class="p-6 cursor-pointer text-xl font-semibold text-white hover:text-red-400 transition-colors">
+                            How do I stay focused during work sessions?
+                        </summary>
+                        <div class="px-6 pb-6 text-gray-300">
+                            <p>Remove all distractions before starting. Put your phone in another room, close unnecessary browser tabs, and let others know you're in a focus session. Use noise-canceling headphones or white noise if needed.</p>
+                        </div>
+                    </details>
+                    <details class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl border border-white border-opacity-20">
+                        <summary class="p-6 cursor-pointer text-xl font-semibold text-white hover:text-red-400 transition-colors">
+                            What should I do during breaks?
+                        </summary>
+                        <div class="px-6 pb-6 text-gray-300">
+                            <p>Step away from your workspace. Stretch, walk around, do breathing exercises, or look out the window. Avoid checking social media or emails as this doesn't give your brain the rest it needs.</p>
+                        </div>
+                    </details>
+                    <details class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl border border-white border-opacity-20">
+                        <summary class="p-6 cursor-pointer text-xl font-semibold text-white hover:text-red-400 transition-colors">
+                            Can I customize the timer intervals?
+                        </summary>
+                        <div class="px-6 pb-6 text-gray-300">
+                            <p>Absolutely! While 25/5 is the classic Pomodoro ratio, you can adjust it to suit your needs. Some people prefer 45-minute work sessions with 15-minute breaks, while others work better with shorter 15-minute focused bursts.</p>
+                        </div>
+                    </details>
+                    <details class="bg-white bg-opacity-10 backdrop-blur-md rounded-2xl border border-white border-opacity-20">
+                        <summary class="p-6 cursor-pointer text-xl font-semibold text-white hover:text-red-400 transition-colors">
+                            How many sessions should I do per day?
+                        </summary>
+                        <div class="px-6 pb-6 text-gray-300">
+                            <p>Start with 4-6 sessions and adjust based on your energy levels. Quality matters more than quantity. It's better to have 4 highly focused sessions than 8 distracted ones.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-black bg-opacity-40 border-t border-white border-opacity-10">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="text-2xl font-bold text-white mb-4">LifeFlow</div>
+                    <p class="text-gray-400 mb-4">Boost your productivity with the proven Pomodoro Technique.</p>
+                    <div class="flex space-x-4">
+                        <div class="w-8 h-8 bg-red-600 rounded-full"></div>
+                        <div class="w-8 h-8 bg-blue-600 rounded-full"></div>
+                        <div class="w-8 h-8 bg-purple-600 rounded-full"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white border-opacity-10 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm">Website possible by the collaboration of Life skill and IT club hope you like it.</p>
+                <p class="text-gray-400 text-sm">Content by life skill club moderator.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const lines = menuBtn.querySelectorAll('div');
+
+        menuBtn.addEventListener('click', () => {
+            if (mobileMenu.style.maxHeight === '0px' || !mobileMenu.style.maxHeight) {
+                mobileMenu.style.maxHeight = '200px';
+                lines[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                lines[1].style.opacity = '0';
+                lines[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+            } else {
+                mobileMenu.style.maxHeight = '0px';
+                lines[0].style.transform = 'none';
+                lines[1].style.opacity = '1';
+                lines[2].style.transform = 'none';
+            }
+        });
+
+        let timeLeft = 1500;
+        let isRunning = false;
+        let sessionType = 'focus';
+
+        function updateDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timeDisplay').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        updateDisplay();
+    </script>
+</body>
+</html>
